@@ -1,18 +1,28 @@
-let count = 0;
-count += 1;
-count = "문자열"; // error 자동으로 타입 할당되어있음
+// return type - number
+// parameter x - number / y - number
+function sum(x: number, y: number): number {
+  return x + y;
+}
 
-const message: string = "hello world";
-const done: boolean = false;
+const result = sum(1, 2);
 
-const numbers: number[] = [1, 2, 3];
-const messages: string[] = ["hello", "world"];
+// return type - number
+// paramter numbers = number[]
+function sumArray(numbers: number[]): number {
+  return numbers.reduce((acc, current) => acc + current, 0);
+}
 
-message.push(1); // error string[] 타입에 인트 추가 X
+const total = sumArray([1, 2, 3, 4, 5]);
+console.log(total);
 
-let mightBeUndefined: string | undefined = undefined; // Union Type
-let nullableNumber: number | null = 10; // null
+// return type - 미설정
+function returnNothing() {
+  console.log("어쩌고저쩌고");
+}
 
-let color: "red" | "orange" | "yellow" = "red"; // literal string type (union)
-color = "yellow";
-color = "green"; // error liter string type에  없음
+returnNothing(); // 자동으로 return type이 void가 된다.
+
+// return type - string, number union
+function returnStringOrNumber(): string | number {
+  return 4;
+}
