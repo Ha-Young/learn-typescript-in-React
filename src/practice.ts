@@ -1,31 +1,34 @@
-import { NumberLiteralType } from "typescript";
-
-interface Shape {
-  getArea(): number;
+interface Person {
+  name: string;
+  age?: number; // ?는 프로퍼티가 있어도 되고 없어도 될때 쓴다.
 }
 
-class Circle implements Shape {
-  constructor(public radius: number) {}
-
-  getArea() {
-    return this.radius * this.radius * Math.PI;
-  }
+interface Developer extends Person {
+  skills: string[];
 }
 
-class Rectangle implements Shape {
-  constructor(private width: number, private height: number) {}
+// type alias - interface와 같지만 더 다양한 일을 할 수 있다.
+type Person = {
+  name: string;
+  age?: number; // ?는 프로퍼티가 있어도 되고 없어도 될때 쓴다.
+};
 
-  getArea() {
-    return this.width * this.height;
-  }
-}
+type Developer = Person & {
+  skills: string[];
+};
 
-const circle = new Circle(5);
-const rectangle = new Rectangle(2, 5);
+const person: Person = {
+  name: "김사람",
+  age: 20,
+};
 
-// 다형성
-const shapes: Shape[] = [circle, rectangle];
+const expert: Developer = {
+  name: "김개발",
+  skills: ["javascript", "react", "typescript"],
+};
 
-shapes.forEach((shape) => {
-  console.log(shape.getArea());
-});
+type People = Person[];
+const people: People = [person, expert];
+
+type Color = "red" | "oragne" | "yellow";
+const color: Color = "oragne";
