@@ -1,34 +1,58 @@
-interface Person {
-  name: string;
-  age?: number; // ?는 프로퍼티가 있어도 되고 없어도 될때 쓴다.
+function merge<T1, T2>(a: T1, b: T2) {
+  return {
+    ...a,
+    ...b,
+  };
 }
 
-interface Developer extends Person {
-  skills: string[];
+const merged = merge({ foo: 1 }, { bar: 2, foobar: 3 });
+
+function wrap<T>(param: T) {
+  return {
+    param,
+  };
 }
 
-// type alias - interface와 같지만 더 다양한 일을 할 수 있다.
-type Person = {
-  name: string;
-  age?: number; // ?는 프로퍼티가 있어도 되고 없어도 될때 쓴다.
+const wrapped = wrap(10);
+
+wrapped.param;
+
+// 위 코드를 보면 any를 쓰는 것보다 Generics를 쓰는 것이 타입을 유추 할 수 있다.
+
+interface Items<T, V> {
+  list: T[];
+  value: V;
+}
+
+const items: Items<number, string> = {
+  list: [1, 2, 3],
+  value: "aaaa",
 };
 
-type Developer = Person & {
-  skills: string[];
-};
+class Queue<T> {
+  list: T[] = [];
 
-const person: Person = {
-  name: "김사람",
-  age: 20,
-};
+  get length() {
+    return this.list.length;
+  }
 
-const expert: Developer = {
-  name: "김개발",
-  skills: ["javascript", "react", "typescript"],
-};
+  enqueue(item: T) {
+    this.list.push(item);
+  }
 
-type People = Person[];
-const people: People = [person, expert];
+  dequeue() {
+    return this.list.shift();
+  }
+}
 
-type Color = "red" | "oragne" | "yellow";
-const color: Color = "oragne";
+const queue = new Queue<number>();
+queue.enqueue(0);
+queue.enqueue(0);
+queue.enqueue(0);
+queue.enqueue(0);
+queue.enqueue(0);
+queue.enqueue(0);
+
+while (queue.length > 0) {
+  console.log(queue.dequeue());
+}
