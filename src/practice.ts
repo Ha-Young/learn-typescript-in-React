@@ -1,28 +1,31 @@
-// return type - number
-// parameter x - number / y - number
-function sum(x: number, y: number): number {
-  return x + y;
+import { NumberLiteralType } from "typescript";
+
+interface Shape {
+  getArea(): number;
 }
 
-const result = sum(1, 2);
+class Circle implements Shape {
+  constructor(public radius: number) {}
 
-// return type - number
-// paramter numbers = number[]
-function sumArray(numbers: number[]): number {
-  return numbers.reduce((acc, current) => acc + current, 0);
+  getArea() {
+    return this.radius * this.radius * Math.PI;
+  }
 }
 
-const total = sumArray([1, 2, 3, 4, 5]);
-console.log(total);
+class Rectangle implements Shape {
+  constructor(private width: number, private height: number) {}
 
-// return type - 미설정
-function returnNothing() {
-  console.log("어쩌고저쩌고");
+  getArea() {
+    return this.width * this.height;
+  }
 }
 
-returnNothing(); // 자동으로 return type이 void가 된다.
+const circle = new Circle(5);
+const rectangle = new Rectangle(2, 5);
 
-// return type - string, number union
-function returnStringOrNumber(): string | number {
-  return 4;
-}
+// 다형성
+const shapes: Shape[] = [circle, rectangle];
+
+shapes.forEach((shape) => {
+  console.log(shape.getArea());
+});
