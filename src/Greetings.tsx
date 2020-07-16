@@ -5,9 +5,16 @@ type GreetingsProps = {
   mark: string;
   optional?: string;
   onClick: (name: string) => void;
+  children?: React.ReactNode;
 };
 
-function Greetings({ name, mark, optional, onClick }: GreetingsProps) {
+function Greetings({
+  name,
+  mark,
+  optional,
+  onClick,
+  children,
+}: GreetingsProps) {
   const handleClick = () => onClick(name);
   return (
     <div>
